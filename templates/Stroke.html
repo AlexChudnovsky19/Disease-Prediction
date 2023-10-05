@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Link to Google Fonts (same as in the home pAge) -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans%7CExo+2" rel="stylesheet">
+    
+    <!-- Link to your custom CSS file (same as in the home pAge) -->
+    <link rel="stylesheet" href="/static/styles.css">
+    
+    <title>Diabetes Prediction</title>
+</head>
+<body>
+    <div class="content">
+       <div class="left">
+            <h2>Diabetes Prediction</h2>
+            <form action="/Stroke" method="POST">
+                <input type="hidden" name="disease_name" value="Stroke">
+
+                <label for="gender">Gender:</label>
+                <select name="gender" id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Female">Female</option>
+                    <option value="Male">Male</option>
+                </select><br>
+
+                <label for="age">Age (between 1 and 120):</label>
+                <input type="number" name="age" id="age" required min="1" max="120"><br>
+
+                <label for="hypertension">Hypertension:</label>
+                <select name="hypertension" id="hypertension" required>
+                    <option value="">Do You Have Hypertension ?</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select><br>
+
+                <label for="heart_disease">Heart Disease:</label>
+                <select name="heart_disease" id="heart_disease" required>
+                    <option value="">Select heart_disease Type</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select><br>
+
+                <label for="ever_married">Ever Married:</label>
+                <select name="ever_married" id="ever_married" required>
+                    <option value="">Select Ever Married Type</option>
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                </select><br>
+
+                <label for="work_type">Work Type:</label>
+                <select name="work_type" id="work_type" required>
+                    <option value="">Your Work Type</option>
+                    <option value="Private">Private</option>
+                    <option value="Self-employed">Self Employed</option>
+                    <option value="Govt_job">Goverment Job</option>
+                    <option value="children">Children</option>
+                </select><br>
+
+                <label for="Residence">Residence:</label>
+                <select name="Residence" id="Residence" required>
+                    <option value="">Select Residence Type</option>
+                    <option value="Rural">Rural</option>
+                    <option value="Urban">Urban</option>
+                </select><br>
+
+                <label for="avg_glucose_level">Avrege Glucose Level (between 50 and 300):</label>
+                <input type="number" name="avg_glucose_level" id="avg_glucose_level" required min="50" max="300"><br>
+
+                <label for="bmi">BMI (between 10 and 70):</label>
+                <input type="number" name="bmi" id="bmi" required min="10" max="70"><br>
+                
+                <label for="smoking_status">Smoking Status:</label>
+                <select name="smoking_status" id="smoking_status" required>
+                    <option value="">Your Smoking Status</option>
+                    <option value="never smoked">Never</option>
+                    <option value="smokes">Current</option>
+                    <option value="Unknown">Unknown</option>
+                    <option value="formerly smoked">Former</option>
+                </select><br>
+
+                <button type="submit">Predict</button>
+            </form>
+            <div class="prediction-result">
+                {% if result %}
+                    <p>
+                        {% if result == "Positive" %}
+                            You are likely to have Stroke.
+                        {% elif result == "Negative" %}
+                            You are not likely to have Stroke.
+                        {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+      </div>
+    </div>
+        <div class="right">
+        </div>
+</body>
+</html>
+      </div>
+    </div>
+        <div class="right">
+        </div>
+</body>
+</html>

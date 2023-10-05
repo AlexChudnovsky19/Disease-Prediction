@@ -3,10 +3,11 @@ from dataclasses import dataclass
 
 import numpy as np 
 import pandas as pd
-from sklearn.compose import ColumnTransformer
+from sklearn.compose import ColumnTransformer , make_column_transformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder,StandardScaler
+from sklearn.base import BaseEstimator, TransformerMixin
 
 from src.exception import CustomException
 from src.logger import logging
@@ -15,13 +16,28 @@ import os
 
 from src.utils import save_object
 
+
 @dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path: str
+    def __init__(self, disease_name):
+        self.preprocessor_obj_file_path = os.path.join('artifacts', f"preprocessor_{disease_name}.pkl")
+
+
+
+class CustomOneHotEncoder(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self.one_hot_encoder = OneHotEncoder(handle_unknown='ignore')
+
+    def fit(self, X, y=None):
+        self.one_hot_encoder.fit(X)
+        return self
+
+    def transform(self, X):
+        return self.one_hot_encoder.transform(X)
 
 class DataTransformation:
-    def __init__(self, preprocessor_obj_file_path):
-        self.data_transformation_config = DataTransformationConfig(preprocessor_obj_file_path)
+    def __init__(self, disease_name):
+        self.data_transformation_config = DataTransformationConfig(disease_name)
 
     def get_data_transformer_object(self, numerical_columns, categorical_columns):
         try:
@@ -35,7 +51,7 @@ class DataTransformation:
             cat_pipeline = Pipeline(
                 steps=[
                     ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("one_hot_encoder", OneHotEncoder()),
+                    ("one_hot_encoder", CustomOneHotEncoder()),
                     ("scaler", StandardScaler(with_mean=False))
                 ]
             )
@@ -78,6 +94,8 @@ class DataTransformation:
             logging.info(
                 f"Applying preprocessing object on training dataframe and testing dataframe."
             )
+            input_feature_train_df = pd.DataFrame(input_feature_train_df)
+            input_feature_test_df = pd.DataFrame(input_feature_test_df)
 
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
@@ -87,41 +105,61 @@ class DataTransformation:
 
             logging.info(f"Saved preprocessing object.")
 
+
+
             save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
+           
 
             return (
                 train_arr,
                 test_arr,
-                self.data_transformation_config.preprocessor_obj_file_path,
             )
 
         except Exception as e:
             raise CustomException(e, sys)
 
-# Usage
+# ...
+
 if __name__ == "__main__":
-    csv_files = [
+    disease_info = [
+        #{
+        #    "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Heart_Failure_predict.csv',
+        #    "target_column": 'HeartDisease',
+        #    "name" : 'Heart_Failure'
+        #},
         {
-            "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\heart_failure.csv',
-            "target_column": 'HeartDisease'
+            "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Diabetes_predict.csv',
+            "target_column": 'diabetes',
+            "name" : 'Diabetes'
         },
-
+        #{
+        #    "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Stroke_predict.csv',
+        #    "target_column": 'stroke',
+        #    "name" : 'Stroke'
+        #},
+        # Add more disease information as needed
     ]
-    
-    for csv_info in csv_files:
-        train_path = os.path.join("artifacts", f"train_{os.path.basename(csv_info['csv_path'])}")
-        test_path = os.path.join("artifacts", f"test_{os.path.basename(csv_info['csv_path'])}")
-        preprocessor_path = os.path.join("artifacts", f"preprocessor_{os.path.basename(csv_info['csv_path'])}.pkl")
+
+    for disease_data in disease_info:
+        train_path = os.path.join("artifacts", f"train_{os.path.basename(disease_data['csv_path'])}")
+        test_path = os.path.join("artifacts", f"test_{os.path.basename(disease_data['csv_path'])}")
+
+        # Create a DataTransformation instance and pass the preprocessor path
+        data_transformation = DataTransformation(disease_data['name'])
+        train_arr, test_arr = data_transformation.initiate_data_transformation(
+            train_path, test_path, disease_data['target_column']
+        )
+
+
+        # Create a ModelTrainer instance
+        model_trainer = ModelTrainer()
+
+        print(f"Prediction of {disease_data['target_column']} started:")
         
-        data_transformation = DataTransformation(preprocessor_path)
-        train_arr,test_arr,_ = data_transformation.initiate_data_transformation(train_path, test_path, csv_info['target_column'])
-
-        modeltrainer=ModelTrainer()
-
-        print(f"in transformation {train_arr.shape}")
-
-
-        print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
+        # Call the initiate_model_trainer method with disease-specific data and preprocessor_path
+        accuracy = model_trainer.initiate_model_trainer(disease_data['name'], train_arr, test_arr)
+        
+        print(f"Accuracy for {disease_data['target_column']}: {accuracy}")

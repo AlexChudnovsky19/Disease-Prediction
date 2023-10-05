@@ -2,8 +2,27 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 
-def sigmoid(z):
-    return 1 / (1 + np.exp(-z))
+def _positive_sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+
+def _negative_sigmoid(x):
+    # Cache exp so you won't have to calculate it twice
+    exp = np.exp(x)
+    return exp / (exp + 1)
+
+
+def sigmoid(x):
+    positive = x >= 0
+    # Boolean array inversion is faster than another comparison
+    negative = ~positive
+
+    # empty contains juke hence will be faster to allocate than zeros
+    result = np.empty_like(x)
+    result[positive] = _positive_sigmoid(x[positive])
+    result[negative] = _negative_sigmoid(x[negative])
+
+    return result
 
 class LogisticRegression(BaseEstimator, ClassifierMixin):
     def __init__(self, lr, max_iters, tol):

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Link to Google Fonts (same as in the home pAge) -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans%7CExo+2" rel="stylesheet">
+    
+    <!-- Link to your custom CSS file (same as in the home pAge) -->
+    <link rel="stylesheet" href="/static/styles.css">
+    
+    <title>Heart Failure Prediction</title>
+</head>
+<body>
+    <div class="content">
+       <div class="left">
+            <h2>Heart Failure Prediction</h2>
+            <form action="/Heart_Failure" method="POST">
+                <input type="hidden" name="disease_name" value="Heart_Failure">
+
+                <label for="Age">Age (between 1 and 120):</label>
+                <input type="number" name="Age" id="Age" required min="1" max="120"><br>
+
+                <label for="Sex">Sex:</label>
+                <select name="Sex" id="Sex" required>
+                    <option value="">Select Gender</option>
+                    <option value="0">Female</option>
+                    <option value="1">Male</option>
+                </select><br>
+
+                <label for="ChestPainType">Chest Pain Type:</label>
+                <select name="ChestPainType" id="ChestPainType" required>
+                    <option value="">Select Chest Pain Type</option>
+                    <option value="ATA">Atypical Angina</option>
+                    <option value="NAP">Non-Anginal Pain</option>
+                    <option value="ASY">Asymptomatic</option>
+                    <option value="TA">Typical Angina</option>
+                </select><br>
+
+                <label for="RestingBP">RestingBP (between 50 and 200):</label>
+                <input type="number" name="RestingBP" id="RestingBP" required min="50" max="200"><br>
+                
+                <label for="Cholesterol">Cholesterol (between 0 and 600):</label>
+                <input type="number" name="Cholesterol" id="Cholesterol" required min="0" max="600"><br>
+
+                <label for="FastingBS">FastingBS:</label>
+                <select name="FastingBS" id="FastingBS" required>
+                    <option value="">Select FastingBS Type</option>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select><br>
+
+                <label for="RestingECG">RestingECG:</label>
+                <select name="RestingECG" id="RestingECG" required>
+                    <option value="">Select RestingECG Type</option>
+                    <option value="Normal">Normal</option>
+                    <option value="ST">ST-T Wave Abnormality</option>
+                    <option value="LVH">Left Ventricular Hypertrophy</option>
+                </select><br>
+
+                <label for="MaxHR">MaxHR (between 50 and 200):</label>
+                <input type="number" name="MaxHR" id="MaxHR" required min="50" max="200"><br>
+
+                <label for="ExerciseAngina">ExerciseAngina:</label>
+                <select name="ExerciseAngina" id="ExerciseAngina" required>
+                    <option value="">Confirm ExerciseAngina </option>
+                    <option value="N">No</option>
+                    <option value="Y">Yes</option>
+                </select><br>
+
+                <label for="Oldpeak">Oldpeak (between -5 and 5):</label>
+                <input type="number" name="Oldpeak" id="Oldpeak" required min="-5" max="5"><br>
+
+                <label for="ST_Slope">ST_Slope:</label>
+                <select name="ST_Slope" id="ST_Slope" required>
+                    <option value="">Select ST_Slope Type</option>
+                    <option value="DOWN">Downsloping</option>
+                    <option value="FLAT">Flat</option>
+                    <option value="UP">Upsloping</option>
+                </select><br>
+                <button type="submit">Predict</button>
+            </form>
+            <div class="prediction-result">
+                {% if result %}
+                    <p>
+                        {% if result == "Positive" %}
+                            You are likely to get a heart failure.
+                        {% elif result == "Negative" %}
+                            You are not likely to get a heart failure.
+                        {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+      </div>
+    </div>
+        <div class="right">
+        </div>
+</body>
+</html>
+      </div>
+    </div>
+        <div class="right">
+        </div>
+</body>
+</html>

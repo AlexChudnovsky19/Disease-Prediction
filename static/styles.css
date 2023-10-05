@@ -1,0 +1,79 @@
+body {
+    font-family: "Alegreya Sans", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #555; /* Dark gray text color for the entire page */
+}
+
+nav {
+    font-family: "Alegreya Sans", Arial, sans-serif; /* Apply Alegreya Sans to the navbar */
+    background-color: #0074D9; /* Blue background for the navbar */
+    color: #fff; /* White text color */
+    padding: 10px;
+    text-align: center; /* Center-align the text in the navbar */
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+/* Style the links inside the navbar with blue text and white ellipses */
+nav ul li a {
+    color: #0074D9; /* Blue text color for links */
+    text-decoration: none;
+    background-color: #fff; /* White background for ellipses */
+    padding: 5px 10px; /* Add padding to create an ellipse effect around each link */
+    border-radius: 50px; /* Add border-radius for the ellipse effect on links */
+    transition: transform 0.3s, background-color 0.3s; /* Add transition effect */
+}
+
+/* Add hover effect */
+nav ul li a:hover {
+    transform: scale(1.1); /* Scale up the link on hover */
+    background-color: #ddd; /* Light gray background color on hover */
+}
+
+.content {
+    text-align: left; /* Align text on the left */
+    margin: 20px;
+    position: relative;
+}
+
+.header {
+    margin-bottom: 20px; /* Add spacing between header and text */
+}
+
+/* Style "Disease Predictor" and "Using Machine Learning" in gray with the same font size */
+.header h1, .header h2 {
+    font-family: "Exo 2", Arial, sans-serif; /* Apply Exo 2 to the headers */
+    color: #555; /* Dark gray text color */
+    font-size: 24px; /* Adjust the font size as needed */
+}
+
+/* Style the text below the headers in a different color */
+.text-below-headers {
+    font-family: "Alegreya Sans", Arial, sans-serif; /* Apply Alegreya Sans to the text below headers */
+    color: #888; /* Different color for the text below headers */
+}
+
+/* Create a concave shape on the right half filled with light blue */
+.right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #87CEEB; /* Light blue color */
+    clip-path: polygon(100% 0, 100% 100%, 0 100%); /* Define a concave shape */
+    z-index: -1; /* Place it behind the content */
+}
+
+

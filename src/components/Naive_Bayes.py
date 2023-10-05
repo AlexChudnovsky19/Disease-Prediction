@@ -37,8 +37,14 @@ class NaiveBayesClassifier(BaseEstimator, ClassifierMixin):
             summaries[class_value] = self.summarize_dataset(instances)
         return summaries
 
-    def calculate_probability(self, x, mean, stdev):
+    def calculate_probability(self,x, mean, stdev):
+        if stdev == 0:
+            return 0  # Handle division by zero gracefully, return 0 probability
+
         exponent = math.exp(-((x - mean) ** 2 / (2 * stdev ** 2)))
+        if math.isinf(exponent) or math.isnan(exponent):
+            return 0  # Handle invalid values, return 0 probability
+
         return (1 / (math.sqrt(2 * math.pi) * stdev)) * exponent
 
     def fit(self, X, y):

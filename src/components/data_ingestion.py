@@ -49,7 +49,10 @@ class DataIngestion:
 
 # Usage
 if __name__ == "__main__":
-    csv_files = [r'\Users\alexc\Heart_failure_predictor\notebook\heart_failure.csv']
+    csv_files = [ r'\Users\alexc\Heart_failure_predictor\notebook\Heart_Failure_predict.csv']
+                 #r'\Users\alexc\Heart_failure_predictor\notebook\Diabetes_Predict.csv']
+                 #r'\Users\alexc\Heart_failure_predictor\notebook\Stroke_predict.csv']
+
 
     for csv_file in csv_files:
         train_path = os.path.join("artifacts", f"train_{os.path.basename(csv_file)}")

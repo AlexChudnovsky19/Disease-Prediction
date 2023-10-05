@@ -3,15 +3,14 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 
 # Define the neural network class
 class NeuralNetwork(BaseEstimator, ClassifierMixin):
-    def __init__(self,shape, hidden_units, alpha, iterations):
+    def __init__(self, hidden_units, alpha, iterations):
         self.hidden_units = hidden_units
-        self.shape = shape
         self.alpha = alpha
         self.iterations = iterations
 
-    def init_params(self):
+    def init_params(self,Shape):
         np.random.seed(0)
-        self.W1 = np.random.rand(self.hidden_units, self.shape) - 0.5
+        self.W1 = np.random.rand(self.hidden_units, Shape) - 0.5
         self.b1 = np.random.rand(self.hidden_units, 1) - 0.5
         self.W2 = np.random.rand(self.hidden_units, self.hidden_units) - 0.5
         self.b2 = np.random.rand(self.hidden_units, 1) - 0.5
@@ -24,7 +23,6 @@ class NeuralNetwork(BaseEstimator, ClassifierMixin):
         return exp_Z / np.sum(exp_Z, axis=0, keepdims=True)
 
     def forward_prop(self, X):
-        print(f"in foward {X.shape} ")
         self.Z1 = np.dot(self.W1, X) + self.b1
         self.A1 = self.ReLU(self.Z1)
         self.Z2 = np.dot(self.W2, self.A1) + self.b2
@@ -50,14 +48,14 @@ class NeuralNetwork(BaseEstimator, ClassifierMixin):
         return Z > 0
 
     def one_hot(self, Y):
+        Y = Y.astype(int)
         one_hot_Y = np.zeros((Y.size, self.hidden_units))
         one_hot_Y[np.arange(Y.size), Y] = 1
         one_hot_Y = one_hot_Y.T
         return one_hot_Y
 
     def fit(self, X, Y):
-        print(f"in fit {X.shape} ")
-        self.init_params()
+        self.init_params(X.shape[0])
         for i in range(self.iterations):
             self.forward_prop(X)
             self.backward_prop(X, Y)
