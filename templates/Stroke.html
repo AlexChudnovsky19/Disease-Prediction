@@ -10,12 +10,12 @@
     <!-- Link to your custom CSS file (same as in the home pAge) -->
     <link rel="stylesheet" href="/static/styles.css">
     
-    <title>Diabetes Prediction</title>
+    <title>Stroke Prediction</title>
 </head>
 <body>
     <div class="content">
        <div class="left">
-            <h2>Diabetes Prediction</h2>
+            <h2>Stroke Prediction</h2>
             <form action="/Stroke" method="POST">
                 <input type="hidden" name="disease_name" value="Stroke">
 
@@ -59,14 +59,14 @@
                     <option value="children">Children</option>
                 </select><br>
 
-                <label for="Residence">Residence:</label>
-                <select name="Residence" id="Residence" required>
+                <label for="Residence_type">Residence:</label>
+                <select name="Residence_type" id="Residence_type" required>
                     <option value="">Select Residence Type</option>
                     <option value="Rural">Rural</option>
                     <option value="Urban">Urban</option>
                 </select><br>
 
-                <label for="avg_glucose_level">Avrege Glucose Level (between 50 and 300):</label>
+                <label for="avg_glucose_level">Average Glucose Level (between 50 and 300):</label>
                 <input type="number" name="avg_glucose_level" id="avg_glucose_level" required min="50" max="300"><br>
 
                 <label for="bmi">BMI (between 10 and 70):</label>

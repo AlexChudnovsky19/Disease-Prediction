@@ -125,22 +125,22 @@ class DataTransformation:
 
 if __name__ == "__main__":
     disease_info = [
-        #{
-        #    "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Heart_Failure_predict.csv',
-        #    "target_column": 'HeartDisease',
-        #    "name" : 'Heart_Failure'
-        #},
+        {
+            "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Heart_Failure_predict.csv',
+            "target_column": 'HeartDisease',
+            "name" : 'Heart_Failure'
+        },
         {
             "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Diabetes_predict.csv',
             "target_column": 'diabetes',
             "name" : 'Diabetes'
         },
-        #{
-        #    "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Stroke_predict.csv',
-        #    "target_column": 'stroke',
-        #    "name" : 'Stroke'
-        #},
-        # Add more disease information as needed
+        {
+            "csv_path": r'\Users\alexc\Heart_failure_predictor\notebook\Stroke_predict.csv',
+            "target_column": 'stroke',
+            "name" : 'Stroke'
+        },
+         
     ]
 
     for disease_data in disease_info:
